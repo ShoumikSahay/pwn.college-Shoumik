@@ -13,5 +13,19 @@ pwn.college{YIlFIXE0gZJYcIzN-W50IwqSVO-.QX4cTO0wSN3kjNzEzW}
 ## Flag
 pwn.college{YIlFIXE0gZJYcIzN-W50IwqSVO-.QX4cTO0wSN3kjNzEzW}
 
+## 2.2 The Root
+## What I did
+hacker@paths~program-and-absolute-paths:~$ /challenge/run
+
+Correct!!!
+
+/challenge/run is an absolute path! Here is your flag:
+
+pwn.college{IEWveuuzUTIZK3VZr5H31gaow9y.QX1QTN0wSN3kjNzEzW}
+
+
+## Flag
+pwn.college{IEWveuuzUTIZK3VZr5H31gaow9y.QX1QTN0wSN3kjNzEzW}
+
 
 
