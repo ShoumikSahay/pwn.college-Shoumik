@@ -1,5 +1,5 @@
 # Module 2. Pondering Paths
-## The Root
+## 2.1 The Root
 ## What I did
 hacker@paths~the-root:~$ /pwn
 
