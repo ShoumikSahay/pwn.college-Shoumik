@@ -68,3 +68,46 @@ pwn.college{4wY7PxYHyWsQPVNr-jgB7oRa-NH.QX2EDO0wSN3kjNzEzW}
 
 ## What I learned
 In this challenge, I learned how to search for and use hidden manpages to understand how to run a command correctly. I also learned that commands can require specific options and numeric arguments, and reading the documentation carefully is essential to execute them properly and retrieve the flag.
+
+## Module 4.6 Helpful programs
+## What I did
+```
+hacker@man~helpful-programs:~$ /challenge/challenge --fortune
+To be trusted is a greater compliment than to be loved.
+hacker@man~helpful-programs:~$ /challenge/challenge --print-value
+The secret value is: 253
+hacker@man~helpful-programs:~$ 
+hacker@man~helpful-programs:~$ /challenge/challenge -g 253
+Correct usage! Your flag: pwn.college{oNWSD2-5RKhFK3_kVnFDUrAnyCE.QX3IDO0wSN3kjNzEzW}
+
+```
+## Flag
+pwn.college{oNWSD2-5RKhFK3_kVnFDUrAnyCE.QX3IDO0wSN3kjNzEzW}
+
+## What I learned
+I learned that not all programs come with a man page, but many provide their own documentation when run with special options like --help or -h. This is a common way to quickly check how to use a program, what arguments it accepts, and what each argument does.
+
+## Module 4.7 Help for Builtins
+## What I did
+```
+hacker@man~help-for-builtins:~$ help challenge
+challenge: challenge [--fortune] [--version] [--secret SECRET]
+    This builtin command will read you the flag, given the right arguments!
+    
+    Options:
+      --fortune		display a fortune
+      --version		display the version
+      --secret VALUE	prints the flag, if VALUE is correct
+
+    You must be sure to provide the right value to --secret. That value
+    is "gsHhkqak".
+hacker@man~help-for-builtins:~$ challenge --secret gsHhkqak
+Correct! Here is your flag!
+pwn.college{gsHhkqakMyjtxUzwMfoHF7bY3g9.QX0ETO0wSN3kjNzEzW}
+
+```
+## Flag
+pwn.college{gsHhkqakMyjtxUzwMfoHF7bY3g9.QX0ETO0wSN3kjNzEzW}
+
+## What I learned
+I learned that some commands are actually shell builtins, meaning they are handled directly by the shell instead of being separate programs. To get help with these builtins, you can use the help command instead of man or --help.
