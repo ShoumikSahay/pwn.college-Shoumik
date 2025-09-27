@@ -261,7 +261,7 @@ pwn.college{k-v5g6lANxBhe0hQO02mRGkvRLu.QX5ETN1wSN3kjNzEzW}
 ```
 ## Flag
 pwn.college{k-v5g6lANxBhe0hQO02mRGkvRLu.QX5ETN1wSN3kjNzEzW}
-```
+
 ## What I learned
 Through this level, I learned how symbolic links work and how they can be used to redirect file access. I practiced creating symlinks with ln -s.
 
