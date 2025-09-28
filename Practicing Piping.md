@@ -1,0 +1,195 @@
+# Practicing Piping
+## Module 6.1 Redirecting Output
+## What I did
+```
+hacker@piping~redirecting-output:~$ echo PWN > COLLEGE
+Correct! You successfully redirected 'PWN' to the file 'COLLEGE'! Here is your 
+flag:
+pwn.college{MoZUChPsi6i1_O-g-1-9-k5NTc7.QX0YTN0wSN3kjNzEzW}
+```
+## Flag
+pwn.college{MoZUChPsi6i1_O-g-1-9-k5NTc7.QX0YTN0wSN3kjNzEzW}
+
+## What I learned
+I learned how to redirect command output into a file using > — for example echo PWN > COLLEGE created (or replaced) 
+the file COLLEGE and wrote PWN into it. This taught me that > sends a command’s standard output to a file (overwriting it), 
+and that I can use redirection to capture program output for later use.
+
+## Module 6.2 Redirecting more output
+## What I did
+```
+hacker@piping~redirecting-more-output:~$ /challenge/run > myflag
+[INFO] WELCOME! This challenge makes the following asks of you:
+[INFO] - the challenge will check that output is redirected to a specific file path : myflag
+[INFO] - the challenge will output a reward file if all the tests pass : /flag
+
+[HYPE] ONWARDS TO GREATNESS!
+
+[INFO] This challenge will perform a bunch of checks.
+[INFO] If you pass these checks, you will receive the /flag file.
+
+[TEST] You should have redirected my stdout to a file called myflag. Checking...
+
+[PASS] The file at the other end of my stdout looks okay!
+[PASS] Success! You have satisfied all execution requirements.
+hacker@piping~redirecting-more-output:~$ cat myflag
+
+[FLAG] Here is your flag:
+[FLAG] pwn.college{smc94o6HHrt3xerWugYIZNDNIlk.QX1YTN0wSN3kjNzEzW}
+```
+## Flag
+pwn.college{smc94o6HHrt3xerWugYIZNDNIlk.QX1YTN0wSN3kjNzEzW}
+
+## What I learned
+learned how to redirect a program’s standard output into a file using >. 
+By running /challenge/run > myflag I captured the program’s output in myflag instead of seeing it on the terminal, and then I read that file with cat myflag to get the flag.
+
+## Module 6.3 Appending Output
+## What I did
+```
+hacker@piping~appending-output:~$ /challenge/run > /home/hacker/the-flag
+[INFO] WELCOME! This challenge makes the following asks of you:
+[INFO] - the challenge will check that output is redirected to a specific file path : /home/hacker/the-flag
+
+[HYPE] ONWARDS TO GREATNESS!
+
+[INFO] This challenge will perform a bunch of checks.
+[INFO] Good luck!
+
+[TEST] You should have redirected my stdout to a file called /home/hacker/the-flag. Checking...
+
+[HINT] File descriptors are inherited from the parent, unless the FD_CLOEXEC is set by the parent on the file descriptor.
+[HINT] For security reasons, some programs, such as python, do this by default in certain cases. Be careful if you are
+[HINT] creating and trying to pass in FDs in python.
+
+[PASS] The file at the other end of my stdout looks okay!
+[PASS] Success! You have satisfied all execution requirements.
+I will write the flag in two parts to the file /home/hacker/the-flag! I'll do 
+the first write directly to the file, and the second write, I'll do to stdout 
+(if it's pointing at the file). If you redirect the output in append mode, the 
+second write will append to (rather than overwrite) the first write, and you'll 
+get the whole flag!
+hacker@piping~appending-output:~$ /challenge/run >> /home/hacker/the-flag
+[INFO] WELCOME! This challenge makes the following asks of you:
+[INFO] - the challenge will check that output is redirected to a specific file path : /home/hacker/the-flag
+
+[HYPE] ONWARDS TO GREATNESS!
+
+[INFO] This challenge will perform a bunch of checks.
+[INFO] Good luck!
+
+[TEST] You should have redirected my stdout to a file called /home/hacker/the-flag. Checking...
+
+[HINT] File descriptors are inherited from the parent, unless the FD_CLOEXEC is set by the parent on the file descriptor.
+[HINT] For security reasons, some programs, such as python, do this by default in certain cases. Be careful if you are
+[HINT] creating and trying to pass in FDs in python.
+
+[PASS] The file at the other end of my stdout looks okay!
+[PASS] Success! You have satisfied all execution requirements.
+I will write the flag in two parts to the file /home/hacker/the-flag! I'll do 
+the first write directly to the file, and the second write, I'll do to stdout 
+(if it's pointing at the file). If you redirect the output in append mode, the 
+second write will append to (rather than overwrite) the first write, and you'll 
+get the whole flag!
+hacker@piping~appending-output:~$ cat /home/hacker/the-flag
+ | 
+\|/ This is the first half:
+ v 
+pwn.college{0ODZWceNzpig46P-gpeCqdqa0rb.QX3ATO0wSN3kjNzEzW}
+                              ^
+     that is the second half /|\
+                              |
+
+If you only see the second half above, you redirected in *truncate* mode (>) 
+rather than *append* mode (>>), and so the write of the second half to stdout 
+overwrote the initial write of the first half directly to the file. Try append 
+mode!
+
+```
+## Flag
+pwn.college{0ODZWceNzpig46P-gpeCqdqa0rb.QX3ATO0wSN3kjNzEzW}
+
+## What I learned
+I learned how shell redirection works—specifically the difference between > (truncate) and >> (append). I saw that a
+program can write data to a file itself and print more to stdout, so redirecting stdout with >> lets the printed output be appended to the file the program created, 
+producing the complete result.
+
+## Module 6.4 Redirecting Errors
+## What I did
+```
+hacker@piping~redirecting-errors:~$ /challenge/run>myflag 2> instructions
+hacker@piping~redirecting-errors:~$ cat myflag
+
+[FLAG] Here is your flag:
+[FLAG] pwn.college{8Tms-7EqfcWOljEjUt3n9yxUYMk.QX3YTN0wSN3kjNzEzW}
+
+
+```
+## Flag
+pwn.college{8Tms-7EqfcWOljEjUt3n9yxUYMk.QX3YTN0wSN3kjNzEzW}
+
+## What I learned
+I learned how to redirect standard output and standard error separately: > (or 1>) sends stdout to a file while 2> sends stderr to another file.
+By running the program with > myflag 2> instructions I captured the program’s normal output (the flag) in myflag and any diagnostic or instructional messages in instructions.
+
+## Module 6.5 Redirecting Input
+## What I did
+```
+hacker@piping~redirecting-input:~$ echo COLLEGE > PWN
+hacker@piping~redirecting-input:~$ /challenge/run<PWN
+Reading from standard input...
+Correct! You have redirected the PWN file into my standard input, and I read 
+the value 'COLLEGE' out of it!
+Here is your flag:
+pwn.college{YBFEJlgeO9IdPrInnYQdedZ-I4G.QXwcTN0wSN3kjNzEzW}
+
+```
+## Flag
+pwn.college{YBFEJlgeO9IdPrInnYQdedZ-I4G.QXwcTN0wSN3kjNzEzW}
+
+## What I learned
+what did i learn?
+ChatGPT said:
+
+I learned how to redirect input into a program using <.
+By writing COLLEGE into a file (echo COLLEGE > PWN) and then running /challenge/run < PWN, I made the program read its standard input from that file instead of the keyboard.
+
+## Module 6.6 grepping stored results
+## What I did
+```
+hacker@piping~grepping-stored-results:~$ /challenge/run > /tmp/data.txt
+[INFO] WELCOME! This challenge makes the following asks of you:
+[INFO] - the challenge will check that output is redirected to a specific file path : /tmp/data.txt
+[INFO] - the challenge will output a reward file if all the tests pass : /challenge/.data.txt
+
+[HYPE] ONWARDS TO GREATNESS!
+
+[INFO] This challenge will perform a bunch of checks.
+[INFO] If you pass these checks, you will receive the /challenge/.data.txt file.
+
+[TEST] You should have redirected my stdout to a file called /tmp/data.txt. Checking...
+
+[HINT] File descriptors are inherited from the parent, unless the FD_CLOEXEC is set by the parent on the file descriptor.
+[HINT] For security reasons, some programs, such as python, do this by default in certain cases. Be careful if you are
+[HINT] creating and trying to pass in FDs in python.
+
+[PASS] The file at the other end of my stdout looks okay!
+[PASS] Success! You have satisfied all execution requirements.
+hacker@piping~grepping-stored-results:~$ grep pwn.college /tmp/data.txt
+pwn.college{oYJv3vLp9q7nHH9UmKqE2X-8wqg.QX4EDO0wSN3kjNzEzW}
+
+```
+## Flag
+pwn.college{oYJv3vLp9q7nHH9UmKqE2X-8wqg.QX4EDO0wSN3kjNzEzW}
+## What I learned
+I learned how to search for specific text inside files using grep. By redirecting program output to a file and then using grep with a pattern like "pwn.college",
+I can quickly find the flag without manually scanning through thousands of lines. This saves time and makes handling large outputs much easier.
+
+## Module 6.7 grepping live output
+## What I did
+```
+
+```
+## Flag
+
+## What I learned
