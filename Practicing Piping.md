@@ -188,8 +188,138 @@ I can quickly find the flag without manually scanning through thousands of lines
 ## Module 6.7 grepping live output
 ## What I did
 ```
+hacker@piping~grepping-live-output:~$ /challenge/run | grep pwn.college
+[INFO] WELCOME! This challenge makes the following asks of you:
+[INFO] - the challenge checks for a specific process at the other end of stdout : grep
+[INFO] - the challenge will output a reward file if all the tests pass : /challenge/.data.txt
+
+[HYPE] ONWARDS TO GREATNESS!
+
+[INFO] This challenge will perform a bunch of checks.
+[INFO] If you pass these checks, you will receive the /challenge/.data.txt file.
+
+[TEST] You should have redirected my stdout to another process. Checking...
+[TEST] Performing checks on that process!
+
+[INFO] The process' executable is /nix/store/8b4vn1iyn6kqiisjvlmv67d1c0p3j6wj-gnugrep-3.11/bin/grep.
+[INFO] This might be different than expected because of symbolic links (for example, from /usr/bin/python to /usr/bin/python3 to /usr/bin/python3.8).
+[INFO] To pass the checks, the executable must be grep.
+
+[PASS] You have passed the checks on the process on the other end of my stdout!
+[PASS] Success! You have satisfied all execution requirements.
+pwn.college{U7bqBLvin0pxEtrV7hX87BDYDIM.QX5EDO0wSN3kjNzEzW}
+```
+## Flag
+pwn.college{U7bqBLvin0pxEtrV7hX87BDYDIM.QX5EDO0wSN3kjNzEzW}
+
+## What I learned
+I learned how piping works: by using |, I connected the output of /challenge/run directly into grep, making grep the process on the other end of stdout. The challenge checked that the receiving program was actually grep (not just a file), and since I piped correctly, it passed the tests and gave me the flag.
+
+## Module 6.8 Grepping Errors
+## What I did
+```
+hacker@piping~grepping-errors:~$ /challenge/run 2>&1 | grep pwn.college
+[INFO] WELCOME! This challenge makes the following asks of you:
+[INFO] - the challenge checks for a specific process at the other end of stderr : grep
+[INFO] - the challenge will output a reward file if all the tests pass : /challenge/.data.txt
+
+[HYPE] ONWARDS TO GREATNESS!
+
+[INFO] This challenge will perform a bunch of checks.
+[INFO] If you pass these checks, you will receive the /challenge/.data.txt file.
+
+[TEST] You should have redirected my stderr to another process. Checking...
+[TEST] Performing checks on that process!
+
+[INFO] The process' executable is /nix/store/8b4vn1iyn6kqiisjvlmv67d1c0p3j6wj-gnugrep-3.11/bin/grep.
+[INFO] This might be different than expected because of symbolic links (for example, from /usr/bin/python to /usr/bin/python3 to /usr/bin/python3.8).
+[INFO] To pass the checks, the executable must be grep.
+
+[PASS] You have passed the checks on the process on the other end of my stderr!
+[PASS] Success! You have satisfied all execution requirements.
+pwn.college{Yyuahum_P6gLsCgSj899spbokTj.QX1ATO0wSN3kjNzEzW}
 
 ```
 ## Flag
+pwn.college{Yyuahum_P6gLsCgSj899spbokTj.QX1ATO0wSN3kjNzEzW}
+
+## What I learned
+I learned the difference between stdout and stderr: stdout (fd 1) is for normal program output, while stderr (fd 2) is for errors or diagnostic messages. The pipe (|) only works with stdout, so to grep through errors I had to redirect stderr into stdout using 2>&1 and then pipe the combined stream into grep to find the flag.
+
+## Module 6.9 Filtering with grep -v
+## What I did
+```
+hacker@piping~filtering-with-grep-v:~$ /challenge/run | grep -v DECOY
+pwn.college{o5ONGj1cmVlXt4PA4BNQYD_kP6K.0FOxEzNxwSN3kjNzEzW}
+```
+## Flag
+pwn.college{o5ONGj1cmVlXt4PA4BNQYD_kP6K.0FOxEzNxwSN3kjNzEzW}
+
+## What I learned
+I learned that giving another program’s name as an argument just passes it as text to the command, but it doesn’t actually run that program. To really connect two programs, I must use the pipe (|), which takes the output of one command and feeds it into another. That’s why /challenge/run grep -v DECOY didn’t work, but /challenge/run | grep -v DECOY did.
+
+## Module 6.10 Duplicating piped data with tee
+## What I did
+```
+hacker@piping~duplicating-piped-data-with-tee:~$ /challenge/pwn | tee output |/challenge/college
+Processing...
+WARNING: you are overwriting file output with tee's output...
+The input to 'college' does not contain the correct secret code! This code 
+should be provided by the 'pwn' command. HINT: use 'tee' to intercept the 
+output of 'pwn' and figure out what the code needs to be.
+hacker@piping~duplicating-piped-data-with-tee:~$ cat output
+Usage: /challenge/pwn --secret [SECRET_ARG]
+
+SECRET_ARG should be "g3BoEf5y"
+hacker@piping~duplicating-piped-data-with-tee:~$ /challenge/pwn --secret g3BoEf5y | /challenge/college
+Processing...
+Correct! Passing secret value to /challenge/college...
+Great job! Here is your flag:
+pwn.college{g3BoEf5y4BBaxffWtBybFshotsL.QXxITO0wSN3kjNzEzW}
+```
+## Flag
+pwn.college{g3BoEf5y4BBaxffWtBybFshotsL.QXxITO0wSN3kjNzEzW}
+
+## What I learned
+I learned to pipe /challenge/pwn into /challenge/college instead of passing program names as arguments. If output appears on stderr, I learned to merge it into stdout with 2>&1 before piping. I used tee to save a copy (e.g. /tmp/pwn_code) while still forwarding the stream, which let me inspect it, find a SECRET_ARG: value, and re-run /challenge/college with that value.
+
+
+## Module 6.11 
+## What I did
+```
+
+```
+## Flag
+
+
+## What I learned
+
+## Module 6.12
+## What I did
+```
+
+```
+## Flag
+
+
+## What I learned
+
+## Module 6.13
+## What I did
+```
+
+```
+## Flag
+
+
+## What I learned
+
+## Module 6.14
+## What I did
+```
+
+```
+## Flag
+
 
 ## What I learned
