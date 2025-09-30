@@ -284,42 +284,65 @@ pwn.college{g3BoEf5y4BBaxffWtBybFshotsL.QXxITO0wSN3kjNzEzW}
 I learned to pipe /challenge/pwn into /challenge/college instead of passing program names as arguments. If output appears on stderr, I learned to merge it into stdout with 2>&1 before piping. I used tee to save a copy (e.g. /tmp/pwn_code) while still forwarding the stream, which let me inspect it, find a SECRET_ARG: value, and re-run /challenge/college with that value.
 
 
-## Module 6.11 
+## Module 6.11 Process substitution for input
 ## What I did
 ```
+hacker@piping~process-substitution-for-input:~$ diff <(/challenge/print_decoys) <(/challenge/print_decoys_and_flag)
+19a20
+> pwn.college{AAF_88s4LbN1D5ylU7QrfwJXVNC.0lNwMDOxwSN3kjNzEzW}
+```
+## Flag
+pwn.college{AAF_88s4LbN1D5ylU7QrfwJXVNC.0lNwMDOxwSN3kjNzEzW}
+## What I learned
+I learned that Linux treats everything like a file, and with process substitution <(command) I can pass the output of a command to another command as if it were a file.
+
+## Module 6.12 Writing to multiple programs
+## What I did
+```
+hacker@piping~writing-to-multiple-programs:~$ /challenge/hack | tee >( /challenge/the ) | /challenge/planet
+Congratulations, you have duplicated data into the input of two programs! Here 
+is your flag:
+pwn.college{4ra7jC0HV1TnI-vlK5dxQBoZFn9.QXwgDN1wSN3kjNzEzW}
+```
+## Flag
+pwn.college{4ra7jC0HV1TnI-vlK5dxQBoZFn9.QXwgDN1wSN3kjNzEzW}
+
+## What I learned
+To feed the same output into multiple programs, I need to combine tee with process substitution >(program). That way, tee duplicates the stream and passes it into programs as if they were files, letting me run several commands on the same input simultaneously.
+
+## Module 6.13 Split piping stderr and stdout
+## What I did
+```
+hacker@piping~split-piping-stderr-and-stdout:~$ /challenge/hack 2> >( /challenge/the ) | /challenge/planet
+Congratulations, you have learned a redirection technique that even experts 
+struggle with! Here is your flag:
+pwn.college{4FNNI9YNBBaO_Nn1koE8FDPs9HC.QXxQDM2wSN3kjNzEzW}
 
 ```
 ## Flag
 
+pwn.college{4FNNI9YNBBaO_Nn1koE8FDPs9HC.QXxQDM2wSN3kjNzEzW}
 
 ## What I learned
+I learned that if I want to redirect stderr or stdout into programs (not files), I need to use process substitution. Writing > file or 2> file just treats the path like a file, but >(command) runs the command and gives me a file-like handle to its stdin.
 
-## Module 6.12
+## Module 6.14 Named pipes
 ## What I did
 ```
-
+hacker@piping~named-pipes:~$ mkfifo /tmp/flag_fifo
+hacker@piping~named-pipes:~$ /challenge/run > /tmp/flag_fifo & cat /tmp/flag_fifo
+You're successfully redirecting /challenge/run to a FIFO at /tmp/flag_fifo! 
+Bash will now try to open the FIFO for writing, to pass it as the stdout of 
+/challenge/run. Recall that operations on FIFOs will *block* until both the 
+read side and the write side is open, so /challenge/run will not actually be 
+launched until you start reading from the FIFO!
+[1] 364
+You've correctly redirected /challenge/run's stdout to a FIFO at 
+/tmp/flag_fifo! Here is your flag:
+pwn.college{4iLhyaEpdFrTZN-1qZ-a7oga2dS.01MzMDOxwSN3kjNzEzW}
+[1]+  Done                    /challenge/run > /tmp/flag_fifo
 ```
 ## Flag
-
-
+pwn.college{4iLhyaEpdFrTZN-1qZ-a7oga2dS.01MzMDOxwSN3kjNzEzW}
 ## What I learned
-
-## Module 6.13
-## What I did
-```
-
-```
-## Flag
-
-
-## What I learned
-
-## Module 6.14
-## What I did
-```
-
-```
-## Flag
-
-
-## What I learned
+I learned that when I redirect output into a FIFO (named pipe), the writer will block until a reader opens the pipe. To avoid being stuck, I can either start a reader first (so the writer runs right away) or put the writer in the background with & and then start the reader.
