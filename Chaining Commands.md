@@ -1,4 +1,4 @@
-# Module 12. 
+# Module 12. Chaining Commands
 ## 12.1 Chaining with Semicolons
 ## What I did
 ```
@@ -149,24 +149,55 @@ pwn.college{AEG5Sf0O6XKqeM31hkeR7fk3xfy.01NzMDOxwSN3kjNzEzW}
 ## What I learned
 I learned to write /home/hacker/solve.sh with a shebang that takes one argument, uses if [ "$1" = "pwn" ]; then echo college; else :; fi so the else is present but produces no output, make it executable with chmod +x, and verify with /challenge/run.
 
-## 12.11
+## 12.11 Scripting with multiple conditions
 ## What I did
 ```
+hacker@chaining~scripting-with-multiple-conditions:~$ # create the script
+printf '%s\n' '#!/bin/sh' \
+'case "$1" in' \
+'  hack)  echo the planet ;;' \
+'  pwn)   echo college ;;' \
+'  learn) echo linux ;;' \
+'  *)     echo unknown ;;' \
+'esac' > /home/hacker/solve.sh
+
+# make it executable
+chmod +x /home/hacker/solve.sh
+hacker@chaining~scripting-with-multiple-conditions:~$ /challenge/run
+Correct! Your script properly handles all the conditions with elif.
+Here's your flag:
+pwn.college{g4ZTvHwy_IhCqebUVuHF7l10RCC.0FOzMDOxwSN3kjNzEzW}
 
 ```
 ## Flag
-
+pwn.college{g4ZTvHwy_IhCqebUVuHF7l10RCC.0FOzMDOxwSN3kjNzEzW}
 ## What I learned
+I learned how to write a shell script that takes arguments and uses a case statement to handle different inputs. I now know how to use $1 for command-line arguments, the purpose of the shebang line, and how to make a script executable with chmod +x. Testing it with various inputs taught me how to control output and handle unknown cases efficiently.
 
-## 12.12 
+## 12.12 Reading shell scripts
 ## What I did
 ```
+hacker@chaining~reading-shell-scripts:~$ cat /challenge/run
+#!/opt/pwn.college/bash
+
+read GUESS
+if [ "$GUESS" == "hack the PLANET" ]
+then
+	echo "CORRECT! Your flag:"
+	cat /flag
+else
+	echo "Read the /challenge/run file to figure out the correct password!"
+fi
+ 
+hacker@chaining~reading-shell-scripts:~$ printf '%s\n' 'hack the PLANET' | /challenge/run
+CORRECT! Your flag:
+pwn.college{wqKin4tIAgoeAy-N9_xaVgOXV16.0lMwgDOxwSN3kjNzEzW}
 
 ```
 ## Flag
-
+pwn.college{wqKin4tIAgoeAy-N9_xaVgOXV16.0lMwgDOxwSN3kjNzEzW}
 ## What I learned
-
+I read the /challenge/run script, found the hardcoded password, and learned how read and the if comparison work in bash. I fed the exact string hack the PLANET to the script (keeping capitalization and spacing) and used printf/here-strings to supply input non-interactively to retrieve the flag.
 
 
 
