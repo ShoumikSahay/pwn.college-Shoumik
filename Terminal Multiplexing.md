@@ -72,24 +72,42 @@ pwn.college{ovFGzn1n5KKrFcJS8ZFCwqU73lS.0FO4IDOxwSN3kjNzEzW}
 ## What I learned
 I learned that a single screen session can hold multiple windows (like tabs) and that I can create and navigate them with Ctrl-A shortcuts — Ctrl-A c to create, Ctrl-A n / Ctrl-A p to move next/previous, Ctrl-A 0–Ctrl-A 9 to jump to a numbered window, or Ctrl-A " to pick from a menu.
 
-## 13.5
+## 13.5 Attaching and detaching(tmux)
 ## What I did
 ```
+hacker@terminal-multiplexing~detaching-and-attaching-tmux:~$ tmux attatch
+unknown command: attatch
+hacker@terminal-multiplexing~detaching-and-attaching-tmux:~$ tmux
+[detached (from session 1)]
+hacker@terminal-multiplexing~detaching-and-attaching-tmux:~$ /challenge/run
+Found detached tmux session: 0
+Sending flag to your tmux session...
 
+Flag sent! Now reattach to your tmux session with:
+  tmux attach
+
+You'll find the flag waiting for you there!
+hacker@terminal-multiplexing~detaching-and-attaching-tmux:~$  echo Congratulations, here is your flag: pwn.college{IV3WL0s8W1_28TuFQ_thye6Ik6p.0VO4IDOxwSN3kjNzEzW}
+Congratulations, here is your flag: pwn.college{IV3WL0s8W1_28TuFQ_thye6Ik6p.0VO4IDOxwSN3kjNzEzW}
 ```
 ## Flag
-
+pwn.college{IV3WL0s8W1_28TuFQ_thye6Ik6p.0VO4IDOxwSN3kjNzEzW}
 ## What I learned
+I launched a `tmux` session, learned that `Ctrl-B` is tmux’s command prefix (use `Ctrl-B d` to detach), and that `tmux ls` / `tmux attach` (or `tmux a`) manage sessions. I detached, ran `/challenge/run` which sent the flag into the detached session, then reattached to retrieve the flag — showing how detached tmux sessions can receive output while I’m away.
 
 ## 13.6
 ## What I did
 ```
+Excellent work! You found window 0!
+Here is your flag: pwn.college{c4zHQ7uDyTdGIR4gCjwCyhSwngT.0FM5IDOxwSN3kjNzEzW}
+hacker@terminal-multiplexing~switching-windows-tmux:~$ 
 
 ```
 ## Flag
-
+pwn.college{c4zHQ7uDyTdGIR4gCjwCyhSwngT.0FM5IDOxwSN3kjNzEzW}
 ## What I learned
 
+I learned that, like `screen`, a single `tmux` session can have multiple windows. I can switch between them using `Ctrl-B` followed by `n`/`p` for next/previous, or `Ctrl-B` followed by the window number to jump directly. By navigating to Window 0 in the tmux session, I was able to find and retrieve the flag, showing how tmux organizes multiple tasks within one session.
 
 
-## What I learned
+
