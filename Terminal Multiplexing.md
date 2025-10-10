@@ -40,23 +40,37 @@ I used screen to create a detached terminal session, ran /challenge/run which de
 with screen -r to retrieve the flag. I learned how terminal multiplexers let processes write to background sessions, how /challenge/run can target an existing screen, 
 and that reattaching displays whatever was sent (even if the session later terminates).
 
-## 13.3
+## 13.3 Finding Sessions
 ## What I did
 ```
-
+hacker@terminal-multiplexing~finding-sessions:~$ screen -ls
+There are screens on:
+	150.pts-0.terminal-multiplexing~launching-screen	(Remote or dead)
+	144.session_ef101927e79b98cd	(Detached)
+	147.session_9f6f8a70bb402f20	(Detached)
+	150.session_69503a890a5ca062	(Detached)
+4 Sockets in /home/hacker/.screen.
+hacker@terminal-multiplexing~finding-sessions:~$ screen -r 144
+[detached from 144.session_ef101927e79b98cd]
+hacker@terminal-multiplexing~finding-sessions:~$ screen -r 147
+[detached from 147.session_9f6f8a70bb402f20]
 ```
 ## Flag
-
+pwn.college{MT41KwY4-04iDiQwjoOKbNEemvC.01N4IDOxwSN3kjNzEzW}
 ## What I learned
+I listed running screen sessions with screen -ls and learned to read their states. I reattached specific sessions with screen -r <id> and saw messages like [detached from ...], which taught me that attaching a session can detach it from another terminal.
 
-## 13.4
+## 13.4 Switching Windows
 ## What I did
 ```
-
+Excellent work! You found window 0!
+Here is your flag: pwn.college{ovFGzn1n5KKrFcJS8ZFCwqU73lS.0FO4IDOxwSN3kjNzEzW}
+hacker@terminal-multiplexing~switching-windows:~$ cat /challenge/run       
 ```
 ## Flag
-
+pwn.college{ovFGzn1n5KKrFcJS8ZFCwqU73lS.0FO4IDOxwSN3kjNzEzW}
 ## What I learned
+I learned that a single screen session can hold multiple windows (like tabs) and that I can create and navigate them with Ctrl-A shortcuts — Ctrl-A c to create, Ctrl-A n / Ctrl-A p to move next/previous, Ctrl-A 0–Ctrl-A 9 to jump to a numbered window, or Ctrl-A " to pick from a menu.
 
 ## 13.5
 ## What I did
