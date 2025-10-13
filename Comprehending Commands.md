@@ -24,7 +24,7 @@ pwn.college{wumuYnFjp_WBKe9hGvXkaYu-pIr.QX5ETO0wSN3kjNzEzW}
 ## What I learned
 I learned that using absolute paths (e.g., cat /flag) lets you read files without changing directories, which is especially useful for accessing files in system locations and avoiding context switches.
 
-## 3.3 
+## 3.3 More Catting practice
 ## What I did
 ```
 hacker@commands~more-catting-practice:~$ cd /
