@@ -28,10 +28,7 @@ pwn.college{gJaVx-0WexTFt7nEM592U_UBURY.QXyIDO0wSN3kjNzEzW}
 pwn.college{gJaVx-0WexTFt7nEM592U_UBURY.QXyIDO0wSN3kjNzEzW}
 
 ## What I learned
-hacker@globbing~matching-with-:~$ cd /?ha??enge
-hacker@globbing~matching-with-:/challenge$ /challenge/run
-You ran me with the working directory of /challenge! Here is your flag:
-pwn.college{gJaVx-0WexTFt7nEM592U_UBURY.QXyIDO0wSN3kjNzEzW}
+I learned that a ? can be used to represent a single character in the path.
 
 ## Module 5.3 Matching with []
 ## What I did
@@ -143,7 +140,7 @@ pwn.college{A5noE93NC_VzaFFVkbSY9SampMq.0lN0EzNxwSN3kjNzEzW}
 ## What I learned
 I learned that filenames can contain invisible or unusual characters, and that tab completion and commands like ls -b help reveal them. I also learned how to safely access files with tricky names to retrieve information, like a flag, without guessing the name blindly.
 
-## Module 5.10 
+## Module 5.10 Tab completion on commands
 ## What I did
 ```
 Connected!                                                                        
